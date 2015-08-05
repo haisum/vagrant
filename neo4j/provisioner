@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+export DEBIAN_FRONTEND=noninteractive
+
+installpkg(){
+    dpkg-query --status $1 >/dev/null || apt-get install -y $1
+}
+
+wget -O - http://debian.neo4j.org/neotechnology.gpg.key | apt-key add -
+echo 'deb http://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/neo4j.list
+
+apt-get update
+installpkg neo4j
+sed -i "s/#org.neo4j.server.webserver.address=0.0.0.0/org.neo4j.server.webserver.address=0.0.0.0/g" /etc/neo4j/neo4j-server.properties
+service neo4j-service restart
