@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+export DEBIAN_FRONTEND=noninteractive
+
+installpkg(){
+    dpkg-query --status $1 >/dev/null || apt-get install -y $1
+}
+
+apt-get update
+installpkg python 
+installpkg python3
+installpkg python-setuptools
+installpkg python-pip
